@@ -1,0 +1,94 @@
+-- SQL FUNCTIONS DEMO SCRIPT
+-- A comprehensive demonstration of various SQL functions
+-- =============================================
+
+-- =================
+-- STRING FUNCTIONS
+-- =================
+
+-- Create and use database for string function examples
+CREATE DATABASE FunctionsDB;
+USE FunctionsDB;
+
+-- Create employees table for string function demonstrations
+CREATE TABLE employees (
+    emp_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    department VARCHAR(50)
+);
+
+-- Insert sample employee data
+INSERT INTO employees (first_name, last_name, email, department) VALUES
+('John', 'Doe', 'john.doe@example.com', 'Marketing'),
+('Jane', 'Smith', 'jane.smith@example.com', 'Sales'),
+('Michael', 'Johnson', 'michael.johnson@example.com', 'IT'),
+('Emily', 'Davis', 'emily.davis@example.com', 'HR'),
+('Chris', 'Brown', 'chris.brown@example.com', 'Finance');
+
+-- CONCAT: Combine first and last names into full name
+select concat(first_name, ' ', last_name) as full_name from employees;
+
+-- LENGTH: Get the length of the first name
+select first_name, length(first_name) as length from employees;
+
+-- UPPER and LOWER: Convert first names to uppercase and lowercase
+
+select first_name, upper(first_name) as Uppercase, lower(first_name) as lowercase from employees;
+
+-- TRIM: Remove leading and trailing spaces
+SELECT TRIM(UPPER('      ok.   ')) AS trimmed_sample;
+
+-- SUBSTRING: Extract the first three characters of first names
+SELECT first_name, SUBSTRING(first_name, 1, 3) AS first_three_chars FROM employees;
+
+-- LOCATE: Find the position of character 'a' in first names
+SELECT first_name, LOCATE('a', first_name) AS position_of_a FROM employees;
+
+-- LOCATE: Find the position of characters 'ch' in first names
+SELECT first_name, LOCATE('ch', first_name) AS position_of_ch FROM employees;
+
+-- REPLACE: Replace domain in email addresses
+SELECT first_name, REPLACE(email, 'example.com', 'amazon.com') AS new_email FROM employees;
+
+-- REVERSE: Reverse the characters in first names
+SELECT first_name, REVERSE(first_name) AS reversed_name FROM employees;
+
+-- LEFT and RIGHT: Get the first two and last two characters of first names
+SELECT first_name, 
+       LEFT(first_name, 2) AS first_two, 
+       RIGHT(first_name, 2) AS last_two 
+FROM employees;
+
+-- ASCII: Get ASCII value of the first character in first names (regular and lowercase)
+SELECT first_name, 
+       ASCII(first_name) AS ascii_value, 
+       ASCII(LOWER(first_name)) AS ascii_lowercase_value 
+FROM employees;
+
+-- Create products table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    price DECIMAL(10,2),
+    stock_quantity INT,
+    last_updated TIMESTAMP
+);
+
+-- Insert sample product data
+INSERT INTO products VALUES
+(1, 'Laptop Pro', 'Electronics', 1299.99, 50, '2024-01-15 10:00:00'),
+(2, 'Desk Chair', 'Furniture', 199.99, 30, '2024-01-16 11:30:00'),
+(3, 'Coffee Maker', 'Appliances', 79.99, 100, '2024-01-14 09:15:00'),
+(4, 'Gaming Mouse', 'Electronics', 59.99, 200, '2024-01-17 14:20:00'),
+(5, 'Bookshelf', 'Furniture', 149.99, 25, '2024-01-13 16:45:00');
+
+SELECT * FROM products
+
+-- FIELD: Order products by category in custom order
+SELECT *,
+FIELD(category, 'Electronics', 'Appliances', 'Furniture') AS category_order 
+FROM products 
+ORDER BY FIELD(category, 'Electronics', 'Appliances', 'Furniture') DESC;

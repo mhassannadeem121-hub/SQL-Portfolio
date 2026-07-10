@@ -92,3 +92,19 @@ SELECT *,
 FIELD(category, 'Electronics', 'Appliances', 'Furniture') AS category_order 
 FROM products 
 ORDER BY FIELD(category, 'Electronics', 'Appliances', 'Furniture') DESC;
+
+-- LENGTH vs CHAR_LENGTH: Demonstrate difference with ASCII and multibyte characters
+SELECT LENGTH('hello') AS length_in_bytes;          -- Returns 5 (bytes)
+SELECT LENGTH('こんにちは') AS multibyte_length;      -- Returns more than 5 because each character is multiple bytes
+SELECT CHAR_LENGTH('hello') AS char_count;          -- Returns 5 (characters)
+SELECT CHAR_LENGTH('こんにちは') AS multibyte_char_count; -- Returns 5 (characters)
+
+-- SOUNDEX: Compare phonetically similar strings
+SELECT SOUNDEX('Smith') AS smith_soundex;  -- Returns 'S530'
+SELECT SOUNDEX('Smyth') AS smyth_soundex;  -- Also returns 'S530'
+SELECT SOUNDEX('Robert') AS robert_soundex; -- Returns 'R163'
+SELECT SOUNDEX('Rupert') AS rupert_soundex; -- Also returns 'R163'
+
+-- Find employees with names that sound like "Jane"
+SELECT * FROM employees WHERE SOUNDEX('jane') = SOUNDEX(first_name);
+
